@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "filePath": "C:\\Desktop\\Claude Notes\\test_example.ts",
+  "createdAt": "2026-01-08T15:00:00Z",
+  "updatedAt": "2026-01-08T15:00:00Z",
+  "designIntent": {
+    "purpose": "User type definition and creation utility",
+    "keyDecisions": [
+      "Uses TypeScript interfaces for type safety",
+      "Includes timestamp on creation",
+      "Spreads props to allow extension"
+    ],
+    "rationale": "Centralized user creation ensures consistent user objects across the application"
+  },
+  "assumptions": [
+    {
+      "id": "assume_1",
+      "text": "User props are validated before reaching this function",
+      "severity": "critical"
+    },
+    {
+      "id": "assume_2",
+      "text": "Email format is pre-validated by form validation",
+      "severity": "medium"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "constraint_1",
+      "text": "Must maintain backward compatibility with existing UserProps interface",
+      "type": "api",
+      "reason": "Used in 15+ components across the application"
+    }
+  ],
+  "tradeoffs": [
+    {
+      "id": "tradeoff_1",
+      "shortcut": "Using Date() directly instead of a date library",
+      "reason": "Avoiding additional dependencies for MVP",
+      "debtLevel": "low",
+      "repaymentPlan": "Consider date-fns if timezone handling is needed"
+    }
+  ],
+  "frozenSections": [
+    {
+      "id": "frozen_1",
+      "pattern": "export interface UserProps",
+      "reason": "Public API - changing signature breaks all consumers",
+      "exceptions": "Adding optional properties with defaults only"
+    }
+  ],
+  "requiresAcknowledgment": true,
+  "tags": ["user-management", "critical-path", "type-definitions"]
+}

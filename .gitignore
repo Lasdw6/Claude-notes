@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude settings - local only
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Claude Notes runtime files
+.claude/notes/
+!.claude/notes/.gitkeep
+
+# Test files
+test_validation_file.ts
+test_validation.py
+test_example.ts
+*.pyc
+
+# Documentation - internal only
+IMPLEMENTATION_SUMMARY.md
+
+# Temporary files
+*.tmp
+*.bak

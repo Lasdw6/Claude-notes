@@ -1,0 +1,17 @@
+{
+  "description": "Design Intent Layer hooks for preventing violations of design constraints",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/pre_tool_use.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
