@@ -36,9 +36,9 @@ When working with LLMs on code, critical context about design decisions, assumpt
 /plugin install "C:\Desktop\Claude Notes"
 ```
 
-**Option 2: Install from git repository (when published)**
+**Option 2: Install from git repository**
 ```bash
-/plugin install git+https://github.com/your-username/design-intent-layer
+/plugin install git+https://github.com/Lasdw6/Claude-notes
 ```
 
 **Option 3: Manual installation (alternative)**

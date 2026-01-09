@@ -1,16 +1,8 @@
 {
   "name": "design-intent-layer",
-  "displayName": "Design Intent Layer",
   "version": "1.0.0",
   "description": "Maintains persistent file-level design notes that prevent accidental violations of design intent, assumptions, and intentional shortcuts across LLM sessions",
-  "author": "Claude Code Plugin",
-  "hooks": "./hooks/hooks.json",
-  "commands": {
-    "note": "./commands/note.md"
-  },
-  "permissions": {
-    "allow": ["Read", "Write", "Edit", "Bash"],
-    "deny": []
-  },
-  "readme": "./README.md"
+  "author": {
+    "name": "Claude Code Community"
+  }
 }

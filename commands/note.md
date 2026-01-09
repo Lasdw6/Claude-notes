@@ -1,143 +1,48 @@
-# /note Command
+allowed-tools: Bash(python3 *note_handler.py*)
 
-Manage design intent notes for files in your codebase.
+description: Manage design intent notes for files in your codebase. Create, view, edit, list, delete, and migrate design notes that capture intent, assumptions, constraints, and tradeoffs to prevent violations across LLM sessions.
 
-## Usage
+---
 
-```
-/note <action> [file_path] [options]
-```
+You have access to a `/note` command system for managing design intent notes. Execute the command by running the note_handler.py script located in the plugin directory.
 
-## Actions
+## Available Actions
 
-### create
-Create a new design note for a file with interactive prompts.
+- **create <file_path>** - Create a new design note with interactive prompts
+- **view <file_path>** - Display an existing design note
+- **edit <file_path>** - Edit an existing design note (manual JSON editing)
+- **delete <file_path>** - Delete a design note with confirmation
+- **list** - List all design notes in the project
+- **migrate <old_path> <new_path>** - Migrate note after file rename
+- **help** - Show help message
 
-```bash
-/note create <file_path>
-```
+## Execution
 
-Example:
-```bash
-/note create src/components/Button.tsx
-```
-
-### view
-Display an existing design note in formatted output.
+Parse the user's command arguments and execute:
 
 ```bash
-/note view <file_path>
+python3 ${CLAUDE_PLUGIN_ROOT}/commands/note_handler.py <action> [arguments]
 ```
 
-Example:
-```bash
-/note view src/components/Button.tsx
-```
+For example:
+- `/note create src/file.ts` → `python3 ${CLAUDE_PLUGIN_ROOT}/commands/note_handler.py create src/file.ts`
+- `/note list` → `python3 ${CLAUDE_PLUGIN_ROOT}/commands/note_handler.py list`
+- `/note view src/file.ts` → `python3 ${CLAUDE_PLUGIN_ROOT}/commands/note_handler.py view src/file.ts`
 
-### edit
-Edit an existing design note.
+## Interactive Commands
 
-```bash
-/note edit <file_path>
-```
+For `create`, the script will prompt the user interactively for:
+1. Design intent (purpose, key decisions, rationale)
+2. Assumptions (with severity levels)
+3. Constraints (with types and reasons)
+4. Known tradeoffs (with debt levels and repayment plans)
+5. Frozen sections (patterns or line ranges that cannot be modified)
+6. Tags
 
-### delete
-Delete a design note (with confirmation).
+## Output
 
-```bash
-/note delete <file_path>
-```
+Display the script's output directly to the user. Do not add commentary before or after the command execution - let the script handle all user interaction.
 
-### list
-List all design notes in the current project.
+## Error Handling
 
-```bash
-/note list
-```
-
-### migrate
-Migrate a note from old file path to new file path (for file renames).
-
-```bash
-/note migrate <old_path> <new_path>
-```
-
-Example:
-```bash
-/note migrate old/Button.tsx src/components/Button.tsx
-```
-
-### help
-Show this help message.
-
-```bash
-/note help
-```
-
-## Description
-
-The Design Intent Layer plugin maintains persistent, file-level design notes that serve as "contracts" to prevent accidental violations of design intent, assumptions, and intentional shortcuts across LLM sessions.
-
-Each note contains:
-- **Design Intent**: Purpose, key decisions, and rationale
-- **Assumptions**: What the code assumes (e.g., "async operations", "single-threaded")
-- **Constraints**: Requirements that must be maintained (e.g., "backward compatible API")
-- **Tradeoffs**: Intentional shortcuts or technical debt
-- **Frozen Sections**: Code patterns or line ranges that should not be modified
-
-Before Claude modifies a file with a design note, the note is automatically injected into the context and Claude must explicitly acknowledge understanding of the constraints.
-
-## Examples
-
-### Creating a Note
-
-```bash
-/note create src/auth/service.ts
-```
-
-You'll be prompted for:
-1. Purpose of the file
-2. Key design decisions
-3. Assumptions the code makes
-4. Constraints that must be maintained
-5. Known tradeoffs or shortcuts
-6. Frozen sections (optional)
-
-### Viewing a Note
-
-```bash
-/note view src/auth/service.ts
-```
-
-Displays formatted output with all note sections, severity indicators, and metadata.
-
-### Listing All Notes
-
-```bash
-/note list
-```
-
-Shows all notes in the project with summaries and critical status.
-
-### Migrating After File Rename
-
-```bash
-/note migrate src/old-name.ts src/new-name.ts
-```
-
-Moves the design note to the new file path and records the migration history.
-
-## Note Storage
-
-Notes are stored in `.claude/notes/` directory with SHA1-hashed subdirectories for each file path. The structure is:
-
-```
-.claude/notes/
-├── index.json              # Central registry
-├── <file-path-hash>/
-│   └── note.json          # Individual note
-└── .cache/
-    └── path-hash-cache.json
-```
-
-Notes are version-controlled alongside your code and should be committed to git.
+If the command fails, display the error message from the script and suggest corrective actions based on the error.
